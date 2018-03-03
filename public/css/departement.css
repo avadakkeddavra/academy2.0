@@ -1,0 +1,140 @@
+.departement header{
+    height: 500px !important;
+    background-image: url(../img/slide2.jpg);
+}
+.departement .container{
+    width: 80%;
+}
+.departement .menu-row{
+    background-color: #fff;
+    z-index: 1;
+    position: relative;
+}
+.departement #slider li{
+    position: relative !important;
+    overflow: hidden;
+}
+.departement #slider .desc{
+    top: 15%;
+    width: 100% !important;
+    text-align: center;
+    padding: 0 !important;
+    margin: 0 auto;
+    left: 0 !important;
+    display: block;
+}
+.departement #slider .desc p{
+    width: 60%;
+    margin: 0 auto;
+}
+.departement .site-title{
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    color: #fff !important;
+    top: 50%;
+    transform: translate(0px,-120px)
+}
+.departement .site-title h1{
+    font-size: 35px;
+    text-shadow: 1px 3px 5px #7c7c7c;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.departement .site-title p{
+    color: #e8e8e8;
+    font-size: 17px;
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px 0px;
+}
+.departement .site-title a{
+   margin-top: 0 !important;
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 14px;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    background-color: #fd5308;
+    color: #fff;
+}
+
+.departement .site-title a:hover{
+    background-color: #2f368e;
+}
+.about .row{
+    box-shadow: 5px 5px 15px 2px #cbcbcb
+}
+.about .desc p{
+    padding: 20px;
+}
+.about .desc a{
+    margin-left: 20px;
+}
+.departement .about:nth-child(3) .row{
+    box-shadow: none;
+}
+.advantages a{
+    display: block;
+    text-align: center;
+    width: 120px;
+    margin: 20px auto;
+}
+/*departement news*/
+.departement-news article .new-container{
+    padding-bottom: 30px;
+}
+.departement-news article:hover .new-container{
+    box-shadow: 5px 5px 15px 2px #7c7c7c;
+}
+.departement-news article .h-desc{
+    margin-bottom: 0 !important;
+    padding: 0px 15px;
+}
+.departement-news article span{
+    display: block;
+    margin-bottom: 10px;
+    color: #7c7c7c;
+    font-weight: lighter;
+    padding: 0px 15px;
+}
+.departement-news article p{
+    font-size: 16px;
+    padding: 15px;
+}
+.departement-news article a{
+    margin-left: 15px;
+}
+/*teachers*/
+.departement .teacher img{
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+.departement .teachers .h-block{
+    color: #fff !important;
+}
+.departement .teacher{
+    text-align: center;
+    color: #fff !important;
+}
+.departement .teacher .h-desc{
+    font-size: 16px;
+    position: relative;
+    color: #fff !important;
+}
+.departement .teacher p{
+    color: #fff !important;
+}
+.departement .teacher .h-desc:after{
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 60px;
+    bottom: -10px;
+    left: 50%;
+    margin: 0 -30px;
+    background-color: #fd5308;
+}
