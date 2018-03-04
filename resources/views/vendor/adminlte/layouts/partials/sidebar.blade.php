@@ -37,7 +37,7 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-files-o'></i> <span>Материалы</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="/create/new">Создать</a></li>
+                    <li><a href="/admin/create/new">Создать</a></li>
                     <li><a href="/admin/materials/news">Новости</a></li>
                     <li><a href="/admin/materials/articles">Статьи</a></li>
                     <li><a href="/admin/materials/actions">События</a></li>
@@ -45,9 +45,17 @@
                 </ul>
             </li>
             <li class="treeview">
+                <a href="№"><i class='fa fa-book'></i> <span>Кафедры</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="/admin/create/cafedra">Добавить</a></li>
+                    <li><a href="/admin/cafedras">Просмотр</a></li>
+                    {{-- <li><a href="#">{{  }}</a></li> --}}
+                </ul>
+            </li>
+            <li class="treeview">
                 <a href="№"><i class='fa fa-book'></i> <span>Преродаватели</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">Добавить</a></li>
+                    <li><a href="/admin/create/teacher">Добавить</a></li>
                     <li><a href="/admin/teachers">Просмотр</a></li>
                     {{-- <li><a href="#">{{  }}</a></li> --}}
                 </ul>

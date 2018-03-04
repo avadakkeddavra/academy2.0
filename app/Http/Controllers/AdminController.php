@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Cafedras;
@@ -20,34 +21,22 @@ class AdminController extends Controller
     }
     public function index(Request $request)
     {
-    	$news = News::with('cafedra')->where('type',0)->get();
-    	$articles = News::with('cafedra')->where('type',1)->get();
-    	$actions = News::with('cafedra')->where('type',2)->get();
+    	$news = News::where('type',0)->count();
+    	$articles = News::where('type',1)->count();
+    	$actions = News::where('type',2)->count();
+    	$teachers = Teachers::count();
+    	$cafedras = Cafedras::count();
+        $users = User::count();
 
-    	if($request->isMethod('post'))
-    	{	
+    	return view('adminlte::home',[
+                'news' => $news,
+                'articles' => $articles,
+                'actions' => $actions,
+                'teachers' => $teachers,
+                'cafedras' => $cafedras,
+                'users' => $users
+        ]);
 
-    		switch($request->type){
-    			case 'news':
-    				$data = $news;
-    			break;
-    			
-    			case 'articles':
-    				$data = $articles;
-    			break;
-
-    			case 'actions':
-    				$data = $actions;
-    			break;
-
-    			default:
-    				$data = 'false';
-    			break;
-    		}
-    		return response()->json(['data' => $data]);
-    	}else{
-    		return view('adminlte::home',['news' => $news,'articles' => $articles, 'actions' => $actions]);
-    	}
     }
 
     public function materials($type)
@@ -65,14 +54,60 @@ class AdminController extends Controller
         return view('adminlte::teachers',['teachers' => $teachers,'cafedras' => $cafedras]);
     }
 
+    public function cafedras()
+    {
+        $cafedras = Cafedras::withTrashed()->get();
+
+        return view('adminlte::show.cafedras',['cafedras' => $cafedras]);
+    }
+
     public function creation($type)
     {
         switch($type){
             case 'new':
 
                 $caf = Cafedras::all();
-                return view('adminlte::create_new',['cafedras' => $caf]);
+                return view('adminlte::create.new',['cafedras' => $caf,'type' => 'create']);
                 
+            break;
+            case 'cafedra':
+
+                $teachers = Teachers::all();
+                return view('adminlte::create.cafedra',['teachers' => $teachers,'type' => 'create']);
+
+            break;
+            case 'teacher':
+                $caf = Cafedras::all();
+                return view('adminlte::create.teacher',['cafedras' => $caf,'type' => 'create']);
+            break;
+        }
+    }
+
+    public function updating($type,$id)
+    {
+        switch($type){
+            case 'new':
+
+                $caf = Cafedras::all();
+                $item = News::where('id',$id)->first();
+
+                return view('adminlte::create.new',['cafedras' => $caf,'new' => $item,'type' => 'update']);
+
+                break;
+            case 'cafedra':
+                $teachers = Teachers::all();
+
+                $item = Cafedras::withTrashed()->where('id',$id)->first();
+
+                return view('adminlte::create.cafedra',['teachers' => $teachers,'cafedra' => $item,'type' => 'update']);
+            break;
+
+            case 'teacher':
+
+                $caf = Cafedras::all();
+                $item = Teachers::withTrashed()->where('id',$id)->first();
+
+                return view('adminlte::create.teacher',['cafedras' => $caf,'teacher' => $item,'type' => 'update']);
             break;
         }
     }
@@ -87,12 +122,67 @@ class AdminController extends Controller
             return response($name[count($name)-1]);
     }
 
-    public function create(CreateNewRequest $request)
+    public function create(Request $request)
     {
         if($request->isMethod('post')){
-            if($request->post_type == 'new')
-            {
-                $item = News::create([
+
+            switch($request->post_type) {
+                case 'new':
+                    $item = News::create([
+                        'title' => $request->title,
+                        'caf_id' => $request->caf_id,
+                        'type' => $request->type,
+                        'img' => $request->img,
+                        'text' => $request->text,
+                        'priority' => $request->priority
+                    ]);
+                break;
+
+                case 'cafedra':
+
+                    $item = Cafedras::create([
+                        'name' => $request->title,
+                        'img' => $request->img,
+                        'description' => $request->text,
+                        'header_id' => $request->teacher_id
+                    ]);
+
+                break;
+
+                case 'teacher':
+                    $item = Teachers::create([
+                        'name' => $request->title,
+                        'img' => $request->img,
+                        'description' => $request->text,
+                        'caf_id' => $request->caf_id,
+                        'position' => $request->position
+                    ]);
+                break;
+
+                default:
+                    return response()->json(['success' => false]);
+                break;
+            }
+            return response()->json(['success' => true,'data' => $item]);
+
+        }
+    }
+
+    public function updateFullItem($type,$id,Request $request)
+    {
+        switch ($type) {
+            case 'cafedra':
+
+            $response = Cafedras::where('id',$id)->update([
+                'name' => $request->title,
+                'img' => $request->img,
+                'description' => $request->text,
+                'header_id' => $request->teacher_id
+            ]);
+
+             break;
+            case 'new':
+                $response = News::where('id',$id)->update([
                     'title' => $request->title,
                     'caf_id' => $request->caf_id,
                     'type' => $request->type,
@@ -100,15 +190,21 @@ class AdminController extends Controller
                     'text' => $request->text,
                     'priority' => $request->priority
                 ]);
-            }else{
-                return response()->json(['success' => false]);
-            }
-            
-            return response()->json(['success' => true,'data' => $item]);
+            break;
+            case 'teacher':
+                $response = Teachers::where('id',$id)->update([
+                    'name' => $request->title,
+                    'img' => $request->img,
+                    'description' => $request->text,
+                    'caf_id' => $request->caf_id,
+                    'position' => $request->position
+                ]);
+            break;
         }
+        return response()->json(['success' => $response]);
     }
 
-    public function update(UpdateTeachersRequest $request)
+    public function update(Request $request)
     {
         if(class_exists('App\\Models\\'.$request->type)){
         

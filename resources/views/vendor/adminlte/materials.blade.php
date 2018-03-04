@@ -110,7 +110,7 @@
 									<td>{{ $new->img }}</td>
 									<td>{{ explode(' ',$new->updated_at)[0] }}</td>
 									<td>
-										<button class="update"><i class="fa fa-pencil"></i></button>
+										<a href="/admin/update/new/{{$new->id}}" class="update"><i class="fa fa-pencil"></i></a>
 										@if($new->trashed())
 											<button class="restore"><i class="fa fa-reply"></i></button>
 										@else

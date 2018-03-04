@@ -1,7 +1,13 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-	{{ 'Создать новость' }}
+	@if($type == 'create')
+
+		{{ 'Создать новость' }}
+
+	@elseif($type == 'update')
+		{{ 'Редактировать новость' }}
+	@endif
 @endsection
 <!-- 
 	Подкулючение сторонних стилей только на этой странице
@@ -138,7 +144,13 @@
 @endsection
 
 @section('contentheader_title')
-	{{ 'Создать новость' }}
+	@if($type == 'create')
+
+		{{ 'Создать новость' }}
+
+	@elseif($type == 'update')
+		{{ 'Редактировать новость' }}
+	@endif
 @endsection
 
 @section('main-content')
@@ -176,7 +188,15 @@
 			<div class="col-md-12">
 				<div class="box box-primary">
 					<div class="box-header">
-						<div class="box-title">Создать</div>
+						<div class="box-title">
+							@if($type == 'create')
+
+								{{ 'Создать новость' }}
+
+							@elseif($type == 'update')
+								{{ 'Редактировать новость' }}
+							@endif
+						</div>
 					</div>
 					<div class="box-body">
 						
@@ -186,7 +206,12 @@
 									<label for="">Название</label>
 									<div class="input-group">
 						                <span class="input-group-addon"><i class="fa fa-bookmark-o"></i></span>
-						                <input type="text" id="title" class="form-control" placeholder="Название">
+
+										@if($type == 'update')
+											<input type="text" id="title" class="form-control" value="{{$new->title}}" placeholder="Название">
+										@elseif($type == 'create')
+											<input type="text" id="title" class="form-control" placeholder="Название">
+										@endif
 						            </div>
 								</div>
 								
@@ -198,10 +223,28 @@
 									<label for="">Тип</label>
 									<div class="input-group">
 					                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+
 					                <select name="type" id="type" class="form-control">
-					                	<option value="0">Новость</option>
-					                	<option value="1">Статья</option>
-					                	<option value="2">Событие</option>
+										@if($type == 'update')
+											@if($new->type == 0)
+												<option value="0" selected>Новость</option>
+												<option value="1">Статья</option>
+												<option value="2">Событие</option>
+											@elseif($new->type == 1)
+												<option value="0" >Новость</option>
+												<option value="1" selected>Статья</option>
+												<option value="2">Событие</option>
+											@else
+												<option value="0" >Новость</option>
+												<option value="1" >Статья</option>
+												<option value="2" selected>Событие</option>
+											@endif
+										@elseif($type == 'create')
+											<option value="0">Новость</option>
+											<option value="1">Статья</option>
+											<option value="2">Событие</option>
+										@endif
+
 					                </select>
 					            </div>
 								</div>
@@ -218,7 +261,12 @@
 						                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 						                <select name="" id="caf_id" class="form-control">
 						                	@foreach($cafedras as $caf)
-						                		<option value="{{ $caf->id }}">{{ $caf->name }}</option>
+												@if($type == 'update' && isset($new->caf_id) && $caf->id == $new->caf_id)
+													<option value="{{ $caf->id }}" selected>{{ $caf->name }}</option>
+												@else
+													<option value="{{ $caf->id }}">{{ $caf->name }}</option>
+												@endif
+
 						                	@endforeach
 						                </select>
 						            </div>
@@ -231,10 +279,26 @@
 								<div class="form-group">
 									<label for="">Картинка</label>
 									<div class="input-group">
-						                <input type="file" id="file" name="image" style="display: inline-block;" accept="image/jpeg,image/png,image/gif">
-						                <button type="button" id="uploadImg" class="btn btn-primary">Загрузить</button>
-						                <input type="hidden" name="file_name" id="file_name">
-						                <button type="button" class="btn btn-primary" onclick="$('.imager').fadeIn(200);" style="margin-left: 10px;"><i class="fa fa-file"></i></button><p class="file_checked_name"></p>
+
+										@if($type == 'update')
+
+											<input type="file" id="file" name="image" style="display: inline-block;" accept="image/jpeg,image/png,image/gif" value="{{$new->img}}">
+											<button type="button" id="uploadImg" class="btn btn-primary">Загрузить</button>
+
+											<input type="hidden" name="file_name" id="file_name">
+											<button type="button" class="btn btn-primary" onclick="$('.imager').fadeIn(200);" style="margin-left: 10px;"><i class="fa fa-file"></i></button>
+											<p class="file_checked_name">{{$new->img}}</p>
+
+										@elseif($type == 'create')
+
+											<input type="file" id="file" name="image" style="display: inline-block;" accept="image/jpeg,image/png,image/gif">
+											<button type="button" id="uploadImg" class="btn btn-primary">Загрузить</button>
+
+											<input type="hidden" name="file_name" id="file_name">
+											<button type="button" class="btn btn-primary" onclick="$('.imager').fadeIn(200);" style="margin-left: 10px;"><i class="fa fa-file"></i></button>
+											<p class="file_checked_name"></p>
+
+										@endif
 						            </div>
 								</div>
 								
@@ -247,9 +311,26 @@
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-exclamation"></i></span>
 										<select name="priority" id="priority" class="form-control">
-											<option value="1">Для студентов</option>
-											<option value="2">Обычная</option>
-											<option value="3">Высокий приоритет</option>
+											@if($type == 'update')
+												@if($new->priority == 1)
+													<option value="1" selected>Для студентов</option>
+													<option value="2">Обычная</option>
+													<option value="3">Высокий приоритет</option>
+												@elseif($new->priority == 2)
+													<option value="1" >Для студентов</option>
+													<option value="2" selected>Обычная</option>
+													<option value="3">Высокий приоритет</option>
+												@else
+													<option value="1" >Для студентов</option>
+													<option value="2" >Обычная</option>
+													<option value="3" selected>Высокий приоритет</option>
+												@endif
+											@elseif($type == 'create')
+												<option value="1">Для студентов</option>
+												<option value="2">Обычная</option>
+												<option value="3">Высокий приоритет</option>
+											@endif
+
 										</select>
 									</div>
 								</div>
@@ -260,8 +341,13 @@
 							<br>
 							<div class="col-md-12">
 								<div class="input-group" style='display: block;'>
-					                <textarea id="text" style="width: 100%;"></textarea>
-					            </div>
+									@if($type == 'update')
+										<textarea id="text" style="width: 100%;">{{$new->text}}</textarea>
+									@elseif($type == 'create')
+										<textarea id="text" style="width: 100%;"></textarea>
+									@endif
+
+								</div>
 								<br>
 								<div class="errors">
 									
@@ -283,5 +369,11 @@
 @endsection
 
 @section('scriptcustom')
+	<script>
+		type = "{{$type}}";
+		@if($type == 'update')
+			id="{{$new->id}}";
+		@endif
+	</script>
 <script src="{{ asset('js/admin.js') }}"></script>
 @endsection

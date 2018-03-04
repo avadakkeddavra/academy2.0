@@ -3,7 +3,6 @@ $(document).ready(function(){
 });
 
 // Создание Новостей
-
 $(document).ready(function(){
 	
 	$('#file').on('change',function(){
@@ -30,11 +29,20 @@ $(document).ready(function(){
 
 	});
 
+
+
     $('#create').on('click',function(){
 
         var img = $('.createNew #file').val();
-        img = img.split('\\');
-        img = img[img.length-1];
+        if(img == '')
+        {
+            var img = $('.createNew #file').attr('value');
+        }
+        if(img != undefined)
+        {
+            img = img.split('\\');
+            img = img[img.length-1];
+        }
         
         if($('#file_name').val() != '')
         {
@@ -54,8 +62,15 @@ $(document).ready(function(){
 
         console.log(data);
 
+        if(type == 'create')
+        {
+            var url = '/admin/create';
+        }else if(type == 'update'){
+            var url = '/admin/update/new/'+id;
+        }
+
         $.ajax({
-            url:'/admin/create',
+            url:url,
             data:data,
             type:'POST',
             dataType:'json',

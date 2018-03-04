@@ -96,7 +96,7 @@
 									<td><input type="text" style="display: inline-block;width: auto;" class="form-control positionChange" data-value="{{ $teacher->position }}" value="{{ $teacher->position }}"></td>
 									<td>{{ explode(' ',$teacher->updated_at)[0] }}</td>
 									<td>
-										<button class="update"><i class="fa fa-pencil"></i></button>
+										<a href="/admin/update/teacher/{{$teacher->id}}" class="update"><i class="fa fa-pencil"></i></a>
 										@if($teacher->trashed())
 											<button class="restore"><i class="fa fa-reply"></i></button>
 										@else
