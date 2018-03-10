@@ -16,6 +16,7 @@ Route::get('/news','NewsController@index')->name('news');
 Route::post('/news','NewsController@index')->name('news.post');
 Route::post('/news/search','NewsController@search')->name('news.search');
 Route::get('/news/{new}','NewsController@single')->name('new.single');
+
 Route::group(['middleware' => 'auth'], function () {
 	
 	Route::get('/admin','AdminController@index')->name('admin');

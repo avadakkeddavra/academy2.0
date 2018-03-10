@@ -19,6 +19,7 @@ class AdminController extends Controller
     {
         $this->middleware('is.admin');
     }
+
     public function index(Request $request)
     {
     	$news = News::where('type',0)->count();
