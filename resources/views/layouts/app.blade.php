@@ -35,8 +35,8 @@
 
 	   @yield('content')
 
-
-        <div class="copyright">
+        <footer>
+            <div class="copyright">
                 <div class="container">
                     <div class="col-sm-4">
 

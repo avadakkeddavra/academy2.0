@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="desc col-xs-12">
-            {{$new->text}}
+            @php echo $new->text; @endphp
         </div>
     </div>
 </section>

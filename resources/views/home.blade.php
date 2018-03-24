@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-
+    @if(isset($lastnew))
     <section class="latest-event container">
         <div class="row">
             <div class="col-md-6 img"><img src="img/slide1.jpg" alt="" class="img-responsive"></div>
@@ -14,7 +14,7 @@
             </div>
         </div>
     </section>
-
+    @endif
     <section class="about container">
         <h3 class="h-block">Про факультет<i class="fa fa-comment-o"></i></h3>
         <div class="row">
@@ -48,6 +48,7 @@
             </div>
         </div>
     </section>
+
 
 
     <section class='departments container'>
@@ -122,8 +123,6 @@
                     <p class="teach_work">к.е.н., доцент, доцент кафедри економіки та інформаційних технологій</p>
                 </div>
             </div>
-        </div>
-            <div class="row">
             <div class="col-md-4 col-sm-6 teacher">
                 <img src="img/G011013_4.jpg" alt="" class="img-responsive">
                 <div class="teacher-info">
@@ -152,6 +151,7 @@
         </div>
     </section>
 
+    @if(isset($data['events'][0]))
     <section class="parallax latest-events">
         <div class="bg-overlay"></div>
         <div class="container">
@@ -179,9 +179,10 @@
             </div>
         </div>
     </section>
-
+    @endif
     <div class="clearfix"></div>
 
+    @if(isset($data['news'][0]))
     <section class="latest-news container">
         <h2 class="h-block">Последние новости</h2>
         <div class="row">
@@ -206,6 +207,7 @@
             @endforeach
         </div>
     </section>
+    @endif
 
     <footer>
    <div class="container">
@@ -243,49 +245,4 @@
             </div>
         </div>
 
-
-        <div class="row footer-menu">
-          <div class="container">
-                  <div class="col-md-3 col-sm-6 footer-item">
-                    <h4 class="h_col">Ближайшие события</h4>
-                    <ul>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-sm-6 footer-item">
-                    <h4 class="h_col">Страницы кафедр</h4>
-                    <ul>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-sm-6 footer-item">
-                    <h4 class="h_col">Для студентов</h4>
-                    <ul>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-sm-6 footer-item">
-                    <h4 class="h_col">для абитуриентов</h4>
-                    <ul>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                        <li><a href="#">Lorem ipsum dolor.</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 @endsection

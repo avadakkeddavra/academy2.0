@@ -16,7 +16,7 @@ class NewsController extends Controller
         {
 
         }
-    	return view('news',['news' => $news,'cafedras' => $cafedras, 'ajax' => false]);
+    	return view('news',['news' => $news,'cafedras' => $cafedras, 'ajax' => false,'title' => 'Новости']);
     }
 
     public function adminIndex()

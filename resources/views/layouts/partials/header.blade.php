@@ -2,12 +2,12 @@
       <div class="bg-overlay"></div>
        <div class="menu-row row">
           <div class="logo col-sm-4"><img src="" alt=""></div>
-           <ul class="menu col-sm-8">
-               <li><a href="#">Головна</a></li>
+           <ul class="menu col-sm-6 pull-right">
+               <li><a href="{{route('home')}}">Головна</a></li>
                <li><a href="{{ route('news') }}">Новини</a></li>
-               <li><a href="#">Деканат</a></li>
-               <li><a href="#">Кафедри</a></li>
-               <li><a href="#">Студентам</a></li>
+               {{--<li><a href="#">Деканат</a></li>--}}
+               {{--<li><a href="#">Кафедри</a></li>--}}
+               {{--<li><a href="#">Студентам</a></li>--}}
                <li><a href="#">Контакти</a></li>
            </ul>
        </div>
@@ -19,11 +19,15 @@
             </div>
             @else
             <div class="site-title">
-                <h1>Lorem ipsum dolor sit.</h1>
+                @if( $title != '')
+                    <h1>{{$title}}</h1>
+                @endif
                 <div class="link-pannel">
-                    <a href="#">Главная</a>
-                    <a href="#">Новости</a>
-                    <span class="current-page"> Новость</span>
+                    <a href="/">Главная</a>
+                    <a href="/news">Новости</a>
+                    @if(Route::currentRouteName() == 'new.single')
+                        <span class="current-page"> {{$title}}</span>
+                    @endif
                 </div>
             </div>
         @endif

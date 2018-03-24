@@ -4,4 +4,8 @@ $(document).ready(function(){
         dots:true,
         arrows:false
     })
+
+    $('.teachers .row').slick({
+        slidesToShow:3
+    })
 });
